@@ -1,0 +1,46 @@
+# Default Experiment Configuration
+# Sensitivity-Theoretic Compiler Testing Framework
+
+experiment:
+  name: "baseline_sensitivity_test"
+  description: "Baseline experiment comparing sensitivity-guided vs random testing"
+  
+compilers:
+  - gcc
+  - clang
+
+optimization_levels:
+  - "-O0"
+  - "-O1"  
+  - "-O2"
+  - "-O3"
+
+generator:
+  type: "csmith"  # Options: csmith, yarpgen, template, simple
+  max_funcs: 10
+  max_block_depth: 3
+  
+sensitivity:
+  embedding_dimension: 5
+  time_delay: 1
+  min_neighbors: 5
+  
+phase_detection:
+  method: "cusum"  # Options: cusum, pelt, bocpd
+  significance_level: 0.05
+  
+oracle:
+  type: "differential"  # Options: differential, emi, metamorphic, crash
+  check_sanitizers: true
+  
+budget:
+  hours: 24
+  max_programs: 10000
+  
+output:
+  save_traces: false
+  save_all_programs: false
+  save_bugs: true
+  results_dir: "./results"
+  
+seed: 42  # For reproducibility (null for random)
